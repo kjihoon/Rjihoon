@@ -1,0 +1,3 @@
+
+
+mean(iris$Sepal.Length)
