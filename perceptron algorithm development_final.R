@@ -1,6 +1,6 @@
 ##perceptron
 
-###1
+###122
 exdata<-iris[1:100,c(2,3,5)]
 exdata[,3]<-ifelse(exdata[,3]==exdata[1,3],1,0)
 
