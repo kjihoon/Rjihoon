@@ -2,7 +2,11 @@ mean<-iris$Sepal.Length
 funttest<-function(x, y = NULL,
                alternative = c("two.sided", "less", "greater"),
                mu = 0, paired = FALSE, varequal = FALSE,
+<<<<<<< HEAD
                conflevel = 0.95,clientID="admin"){
+=======
+               conflevel = 0.95,clientID=""){
+>>>>>>> d0df0a5e5ac586d86a4e86a31c6091184bb9354d
   library(ggplot2)
   library(plyr)
   model<-t.test(x=x, y = y,
@@ -62,7 +66,11 @@ funttest<-function(x, y = NULL,
     p<-ggplot(df, aes(x,fill=label))  + 
       geom_histogram(binwidth =(max(x)-min(x))/(1 + 3.322*log(length(x))),col="white")+ 
       geom_line(aes(y = density), data = normaldens,colour="red") +
+<<<<<<< HEAD
       facet_grid(label~.)+ggtitle("Two Sample T-test Hist & N-D Density Plot")
+=======
+      facet_wrap(~ label)+ggtitle("Two Sample T-test Hist & N-D Density Plot")
+>>>>>>> d0df0a5e5ac586d86a4e86a31c6091184bb9354d
     
     
     print(p)
