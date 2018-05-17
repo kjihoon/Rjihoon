@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 #install.packages("corrplot")
 library(corrplot)
 path<<-"C:/anl/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/anl/img/"
@@ -57,7 +57,6 @@ fun_cormplot<-function(df,clientid="admin",method = "pearson"){
 }  
 
 
-=======
 #install.packages("corrplot")
 library(corrplot)
 path<<-"C:/anl/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/anl/img/"
@@ -116,5 +115,4 @@ fun_cormplot<-function(df,clientid="admin",method = "pearson"){
 }  
 
 
->>>>>>> d0df0a5e5ac586d86a4e86a31c6091184bb9354d
   
