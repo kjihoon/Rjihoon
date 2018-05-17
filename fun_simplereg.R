@@ -1,8 +1,8 @@
-path<<-"C:/anl/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/anl/img/"
+#path<<-"C:/anl/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/anl/img/"
 #path<<-"C:/hah/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/anl/img/"
+path<<-"C:/anl/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/mv/img/"
 
-
-fun_plot<-function(p,width = 800, height = 800,plotname="plot.png"){
+fun_plot<-function(p,width = 500, height = 500,plotname="plot.png"){
   tryCatch({
     png(filename =paste0(path,clientid,plotname),width = width, height = height)
     print(p)
@@ -51,20 +51,20 @@ fun_simplereg<-function(formula,plot=T,group=NULL,clientid="admin"){
       output<-capture.output(summary(fit))
       result[[each]] <- output[which(output=="Residuals:"):length(output)]
     }
+    result[['group']] <-unique(group)
     if (plot==T){
       p<-ggplot(df,aes(eval(parse(text = xvar)),eval(parse(text = yvar)),col=group))+
         geom_point()+geom_smooth(method="lm",alpha=.1)+xlab(xvar)+ylab(yvar)+theme_bw()
       fun_plot(p,plotname = "reg_line.png")
     }
   }
-  result[['']]
   return(result)
 }
 
 
 ## return plot =>> reg_influence, reg_influence2,reg_resid
-## return result =>> residtest(tukey-test) dw(dubin - watson), if max.lag=T,then dw
-fun_simplereg_resid<-function(formula,plot=T,clientid="admin",max.lag=F){
+## return result =>> residtest(tukey-test) influence, if max.lag=T,then dw
+fun_simplereg_resid<-function(formula,plot=T,clientid="admin",maxlag=F){
   clientid<<-clientid
   model<-lm(formula = formula)
   df<-model$model
@@ -76,13 +76,13 @@ fun_simplereg_resid<-function(formula,plot=T,clientid="admin",max.lag=F){
   result[['residtest']]<-fun_plot(capture.output(residualPlots(model)),plotname = "reg_resid.png")
   
   ##dubin watson value
-  if (max.lag!=F){
-    result[['dw']]<-capture.output(dwt(model,max.lag))
+  if (maxlag!=F){
+    result[['dw']]<-capture.output(dwt(model,maxlag))
   }
   
   ##cook's distance & hat value .....etc
   tryCatch({
-    png(filename =paste0(path,clientid,"reg_influence.png"),width = 800, height = 800)
+    png(filename =paste0(path,clientid,"reg_influence.png"),width = 500, height = 500)
     par(mfrow=c(2,2))
     
     #diag plot
@@ -116,7 +116,7 @@ fun_simplereg_resid<-function(formula,plot=T,clientid="admin",max.lag=F){
   ##detect influence and outlier using plot2
   fun_plot({
     influenceIndexPlot(model,main = "Influence Index", cex.lab=1.8)
-  },plotname = "reg_influence2.png",width = 800,height = 1200)
+  },plotname = "reg_influence2.png",width = 500,height = 1000)
   
   result[['influence']]<-capture.output(round(influencePlot(model),3))
   return(result)

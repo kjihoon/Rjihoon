@@ -29,6 +29,9 @@ fun_normal<-function(x,clientid="admin"){
     legend("topright",legend = c( "Normal Curve", "Kernel Density Curve"),
            lty=1:2, col=c("blue","red"), cex=.7)},plotname = "normal_dist.png")
   result<-list()
-  result[['shapiro']]<-capture.output(shapiro.test(x))
+  shapiro<-capture.output(shapiro.test(x))
+  shapiro[length(shapiro)+1]<-"alternative hypothesis: It does not follow the normal distribution."
+  result[['shapiro']]<-shapiro
+ 
   return(result)
 }
