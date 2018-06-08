@@ -1,9 +1,9 @@
 
 #path<<-"C:/anl/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/anl/img/"
 #path<<-"C:/hah/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/anl/img/"
-path<<-"C:/anl/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/mv/img/"
+path<<-"C:/newPJ/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/Anl/img/"
 
-fun_plot<-function(p,width = 500, height = 500,plotname="plot.png"){
+fun_plot<-function(p,width = 400, height = 400,plotname="plot.png"){
   tryCatch({
     png(filename =paste0(path,clientid,plotname),width = width, height = height)
     print(p)
@@ -16,9 +16,10 @@ fun_plot<-function(p,width = 500, height = 500,plotname="plot.png"){
 fun_ttest<-function(x=NULL, y = NULL,
                    alternative = c("two.sided", "less", "greater"),
                    mu = 0, paired = FALSE, varequal = FALSE,
-                   conflevel = 0.95,clientid="admin"){
+                   conflevel = 0.95,clientid="admin",...){
   library(ggplot2)
   library(plyr)
+  clientid<<-clientid
   model<-t.test(x=x, y = y,
                 alternative = alternative,
                 mu = mu, paired = paired, var.equal = varequal,
@@ -27,7 +28,6 @@ fun_ttest<-function(x=NULL, y = NULL,
   v2=deparse(substitute(y))
   output<-list()
   output[["result"]]<-capture.output(model)
-  clientid<<-"admin"
    if (is.null(y)){
 
      #boxplot

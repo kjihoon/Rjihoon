@@ -3,11 +3,11 @@
 
 #path<<-"C:/anl/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/anl/img/"
 #path<<-"C:/hah/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/anl/img/" 
-path<<-"C:/anl/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/mv/img/"
+path<<-"C:/newPJ/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/Anl/img/"
 
 
 
-fun_plot<-function(p,width = 800, height = 800,plotname="plot.png"){
+fun_plot<-function(p,width = 400, height = 400,plotname="plot.png"){
   tryCatch({
     png(filename =paste0(path,clientid,plotname),width = width, height = height)
     print(p)
@@ -36,12 +36,13 @@ fun_multireg<-function(formula,plot=T,group=NULL,clientid="admin"){
                              method = "pearson",hist.col = "red",
                              density = TRUE,
                              ellipses = TRUE # show correlation ellipses
-    )},plotname = "reg_psy.png")
+    )},plotname = "multireg_psy.png")
     
     output<-capture.output(summary(model))
     result[['summary']]<-output[which(output=="Residuals:"):length(output)]
     result[['aov']]<-capture.output(anova(model))
     result[['vif']]<-capture.output(vif(model))
+    result[['beta']]<-substring(round(coefficients(model),5),1,5)
   } 
   
   return(result)
@@ -59,7 +60,7 @@ fun_multireg_resid<-function(formula,plot=T,clientid="admin",max.lag=F){
  
   result<-list()
   ##general resid plot
-  result[['residtest']]<-fun_plot(capture.output(residualPlots(model)),plotname = "reg_resid.png")
+  result[['residtest']]<-fun_plot(capture.output(residualPlots(model)),plotname = "multireg_resid.png")
   
   ##dubin watson value
   if (max.lag!=F){
@@ -68,7 +69,7 @@ fun_multireg_resid<-function(formula,plot=T,clientid="admin",max.lag=F){
   
   ##cook's distance & hat value .....etc
   tryCatch({
-    png(filename =paste0(path,clientid,"reg_influence.png"),width = 800, height = 800)
+    png(filename =paste0(path,clientid,"multireg_influence.png"),width = 400, height = 400)
     par(mfrow=c(2,2))
     #diag plot
     for (i in c(2,1,4,5)){
@@ -100,7 +101,7 @@ fun_multireg_resid<-function(formula,plot=T,clientid="admin",max.lag=F){
   ##detect influence and outlier using plot2
   fun_plot({
     influenceIndexPlot(model,main = "Influence Index", cex.lab=1.8)
-  },plotname = "reg_influence2.png",width = 800,height = 1200)
+  },plotname = "multireg_influence2.png",width = 400,height = 800)
   
   result[['influence']]<-capture.output(round(influencePlot(model),3))
   return(result)
@@ -132,7 +133,7 @@ fun_relweights <- function(fit,clientid="admin",...){
                      xlab="% of R-Square", pch=19,col="blue",
                      main="Relative Importance of Predictor Variables",
                      sub=paste("Total R-Square=", round(rsquare, digits=3)),
-                     ...)},plotname = "reg_weight.png",width = 500,height = 500)
+                     ...)},plotname = "multireg_weight.png",width = 400,height = 400)
   import<-capture.output(import)
   return(import)
 }

@@ -1,9 +1,9 @@
 
 #path<<-"C:/anl/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/anl/img/"
 #path<<-"C:/hah/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/anl/img/"
-path<<-"C:/anl/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/mv/img/"
+path<<-"C:/newPJ/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/Anl/img/"
 
-fun_plot<-function(p,width = 500, height = 500,plotname="plot.png"){
+fun_plot<-function(p,width = 400, height = 400,plotname="plot.png"){
   tryCatch({
     png(filename =paste0(path,clientid,plotname),width = width, height = height)
     print(p)
@@ -33,8 +33,9 @@ fun_simplereg<-function(formula,plot=T,group=NULL,clientid="admin"){
   if (is.null(group)){
     output<-capture.output(summary(model))
     result[['summary']]<-output[which(output=="Residuals:"):length(output)]
-    
-    
+    result[['beta']]<-substring(round(coefficients(model),5),1,5)
+    result[['rsq']]<-substring(round(summary(model)[[8]],5)*100,1,5)
+      
     if (plot==T){
       p<-ggplot(df,aes(eval(parse(text = xvar)),eval(parse(text = yvar))))+
         geom_point(aes(color=abs(model$residuals)))+geom_smooth(method="lm",alpha=.1,col="red")+xlab(xvar)+ylab(yvar)+
@@ -83,7 +84,7 @@ fun_simplereg_resid<-function(formula,plot=T,clientid="admin",maxlag=F){
   
   ##cook's distance & hat value .....etc
   tryCatch({
-    png(filename =paste0(path,clientid,"reg_influence.png"),width = 500, height = 500)
+    png(filename =paste0(path,clientid,"reg_influence.png"),width = 700, height = 700)
     par(mfrow=c(2,2))
     
     #diag plot
@@ -117,7 +118,7 @@ fun_simplereg_resid<-function(formula,plot=T,clientid="admin",maxlag=F){
   ##detect influence and outlier using plot2
   fun_plot({
     influenceIndexPlot(model,main = "Influence Index", cex.lab=1.8)
-  },plotname = "reg_influence2.png",width = 500,height = 1000)
+  },plotname = "reg_influence2.png",width = 400,height = 800)
   
   result[['influence']]<-capture.output(round(influencePlot(model),3))
   return(result)
