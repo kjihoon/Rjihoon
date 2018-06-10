@@ -43,6 +43,7 @@ fun_multireg<-function(formula,plot=T,group=NULL,clientid="admin"){
     result[['aov']]<-capture.output(anova(model))
     result[['vif']]<-capture.output(vif(model))
     result[['beta']]<-substring(round(coefficients(model),5),1,5)
+    result[['xnames']]<-names(coefficients(model))[-1]
   } 
   
   return(result)
