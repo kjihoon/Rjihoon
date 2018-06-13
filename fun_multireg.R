@@ -70,7 +70,7 @@ fun_multireg_resid<-function(formula,plot=T,clientid="admin",max.lag=F){
   
   ##cook's distance & hat value .....etc
   tryCatch({
-    png(filename =paste0(path,clientid,"multireg_influence.png"),width = 400, height = 400)
+    png(filename =paste0(path,clientid,"multireg_influence.png"),width = 700, height = 700)
     par(mfrow=c(2,2))
     #diag plot
     for (i in c(2,1,4,5)){
