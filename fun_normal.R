@@ -1,9 +1,9 @@
 
-path<<-"C:/anl/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/anl/img/"
-#path<<-"C:/hah/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/anl/img/"
+#path<<-"C:/anl/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/anl/img/"
+#path<<-"C:/hah/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/anl/img/" 
+path<<-"C:/newPJ/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/Anl/img/"
 
-
-fun_plot<-function(p,width = 500, height = 500,plotname="plot.png"){
+fun_plot<-function(p,width = 400, height = 400,plotname="plot.png"){
   tryCatch({
     png(filename =paste0(path,clientid,plotname),width = width, height = height)
     print(p)
@@ -16,7 +16,7 @@ fun_normal<-function(x,clientid="admin"){
   clientid<<-clientid
   xvar<<-deparse(substitute(x))
   ##qqplot  
-  tryCatch({png(filename =paste0(path,clientid,"normal_qq.png"),width = 500, height = 500);
+  tryCatch({png(filename =paste0(path,clientid,"normal_qq.png"),width = 400, height = 400);
     qqnorm(x);grid();
     qqline(x,col="red")},finally = while(dev.cur()[1]>1){dev.off()})
   ##hist&dens
